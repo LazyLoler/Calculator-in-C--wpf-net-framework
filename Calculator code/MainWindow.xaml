@@ -1,0 +1,174 @@
+﻿<Window x:Class="Calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Calculator" Height="670" Width="400" Background="#FF00142A" 
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI" >
+
+    <Window.Resources>
+        
+        <!-- Drop shadow resource -->
+        <DropShadowEffect x:Key="DropShadow" Color="#FF000000" Direction="270" ShadowDepth="10" 
+                          BlurRadius="6" Opacity="0.5"/>
+
+        <!-- Button style with drop shadow, blue theme -->
+        <Style x:Key="CalcButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1A237E"/>
+            <!-- Dark Indigo Blue -->
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Height" Value="72"/>
+            <Setter Property="Width" Value="72"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="14"
+                                SnapsToDevicePixels="True"
+                                Effect="{StaticResource DropShadow}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#283593"/>
+                                <!-- Medium Indigo Blue -->
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#3949AB"/>
+                                <!-- Slightly lighter blue -->
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#2E2E2E"/>
+                                <Setter Property="Foreground" Value="#7A7A7A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Special style for operator buttons -->
+        <Style x:Key="OperatorButtonStyle" TargetType="Button" BasedOn="{StaticResource CalcButtonStyle}">
+            <Setter Property="Background" Value="#1976D2"/>
+            <!-- Blue 700 -->
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="14" 
+                                SnapsToDevicePixels="True"
+                                Effect="{StaticResource DropShadow}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1565C0"/>
+                                <!-- Blue 800 -->
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#0D47A1"/>
+                                <!-- Blue 900 -->
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Display -->
+        <TextBlock x:Name="HistoryTextBlock" Grid.Row="0" Grid.ColumnSpan="4"
+                   Text="" 
+                   Foreground="#88FFFFFF" 
+                   FontSize="24" 
+                   FontWeight="Normal" 
+                   TextAlignment="Right" 
+                   VerticalAlignment="Top"
+                   Padding="10,20,10,0"/>
+
+        <!-- Current Display -->
+        <TextBlock x:Name="OutputTextBlock" Grid.Row="0" Grid.ColumnSpan="4"
+                   Text="0" 
+                   Foreground="White" 
+                   FontSize="64" 
+                   FontWeight="Bold" 
+                   TextAlignment="Right" 
+                   VerticalAlignment="Bottom"
+                   Padding="12"/>
+
+        <!-- Number buttons -->
+        <Button x:Name="Seven" Content="7" Grid.Row="1" 
+                Grid.Column="0" Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+        <Button x:Name="Eight" Content="8" Grid.Row="1" 
+                Grid.Column="1" Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+        <Button x:Name="Nine" Content="9" Grid.Row="1" 
+                Grid.Column="2" Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+        <Button Content="÷" Grid.Row="1" 
+                Grid.Column="3" Style="{StaticResource OperatorButtonStyle}" Click="Operator_Click"/>
+
+        <Button x:Name="Four" Content="4" Grid.Row="2" 
+                Grid.Column="0" Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+        <Button x:Name="Five" Content="5" Grid.Row="2" 
+                Grid.Column="1" Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+        <Button x:Name="Six" Content="6" Grid.Row="2" 
+                Grid.Column="2" Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+        <Button Content="×" Grid.Row="2" 
+                Grid.Column="3" Style="{StaticResource OperatorButtonStyle}" Click="Operator_Click"/>
+
+        <Button x:Name="One" Content="1" Grid.Row="3" 
+                Grid.Column="0" Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+        <Button x:Name="Two" Content="2" Grid.Row="3"
+                Grid.Column="1" Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+        <Button x:Name="Three" Content="3" Grid.Row="3" 
+                Grid.Column="2" Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+        <Button Content="−" Grid.Row="3" 
+                Grid.Column="3" Style="{StaticResource OperatorButtonStyle}" Click="Operator_Click"/>
+
+        <!-- Fourth row: +/- | 0 (span 2 cols) | . -->
+        <Button Content="+" Grid.Row="4" Grid.Column="3" 
+        Style="{StaticResource OperatorButtonStyle}" Click="Operator_Click"/>
+        <Button Content="+/-" Grid.Row="4" Grid.Column="0" 
+                Style="{StaticResource CalcButtonStyle}" Click="PlusMinus_Click" FontSize="28"/>
+        <Button x:Name="Zero" Content="0" Grid.Row="4" Grid.Column="1" 
+                Style="{StaticResource CalcButtonStyle}" Click="NumBtn" FontSize="36"/>
+        <Button Content="." Grid.Row="4" Grid.Column="2" 
+                Style="{StaticResource CalcButtonStyle}" Click="NumBtn"/>
+
+        <!-- Fifth row: sqrt | x² | Clear | Equals -->
+        <Button Content="√" Grid.Row="5" Grid.Column="0" 
+                Style="{StaticResource OperatorButtonStyle}" Click="Sqrt_Click"/>
+        <Button Content="x²" Grid.Row="5" Grid.Column="1" 
+                Style="{StaticResource OperatorButtonStyle}" Click="Square_Click"/>
+        <Button Content="C" Grid.Row="5" Grid.Column="2" 
+                Style="{StaticResource OperatorButtonStyle}" Click="Clear_Click"/>
+        <Button Content="=" Grid.Row="5" Grid.Column="3" 
+                Style="{StaticResource OperatorButtonStyle}" Click="Equals_Click"/>
+    </Grid>
+</Window>

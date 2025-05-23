@@ -1,0 +1,1 @@
+C:\Users\andre\source\repos\Calculator\Calculator\obj\Release\Calculator.csproj.AssemblyReference.cache
